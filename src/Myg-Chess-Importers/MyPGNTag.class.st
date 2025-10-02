@@ -43,5 +43,5 @@ MyPGNTag >> value [
 { #category : 'accessing' }
 MyPGNTag >> value: anObject [
 
-	value := anObject  
+	value := anObject
 ]
