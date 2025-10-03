@@ -127,7 +127,7 @@ MyFENParser >> parseRank [
 	| rank |
 	self peek = $8 ifTrue: [
 		stream next.
-		^ (1 to: 8) collect: [ :i | 'empty' ] ].
+		^ (1 to: 8) collect: [ :i | 'empty' ]  ].
 
 	rank := OrderedCollection new.
 	[ self peek notNil and: [ (#( $  $/ ) includes: self peek) not ] ]
