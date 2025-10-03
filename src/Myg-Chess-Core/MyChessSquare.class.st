@@ -59,7 +59,7 @@ MyChessSquare >> board: aMyChessBoard [
 { #category : 'initialization' }
 MyChessSquare >> click [
 
-	board click: self
+	board click:  self
 ]
 
 { #category : 'accessing' }
