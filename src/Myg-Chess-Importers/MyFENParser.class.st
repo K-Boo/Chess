@@ -125,7 +125,7 @@ MyFENParser >> parsePiece [
 MyFENParser >> parseRank [
 
 	| rank |
-	self peek = $8 ifTrue: [
+	self peek = $8 ifTrue: [   
 		stream next.
 		^ (1 to: 8) collect: [ :i | 'empty' ]  ].
 
