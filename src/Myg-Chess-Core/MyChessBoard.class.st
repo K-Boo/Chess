@@ -245,7 +245,7 @@ MyChessBoard >> unhighLightTargets: squares [
 MyChessBoard >> unselectSelected [
 	
 	selected ifNil: [ ^ self ].
-	selected doUnselect
+	selected doUnselect  
 ]
 
 { #category : 'accessing' }
