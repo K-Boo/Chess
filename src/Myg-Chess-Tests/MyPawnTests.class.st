@@ -20,6 +20,22 @@ MyPawnTests >> testBlackSingleStepForward [
     self assert: (pawn legalTargetSquares includes: (board at: 'e6'))
 ]
 
+{ #category : 'tests' }
+MyPawnTests >> testWhiteBlockedForward [ 
+	 
+	 "Dans ce test, je place un pion blanc en e2 et une pièce sur e3, puis vérifie que e3 n’est pas légal → si la case devant est occupée, on ne peut pas avancer."
+		
+    "context: un pion blanc est en e2, et une pièce (peu importe la couleur pour ce test) occupe e3."
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e2' put: (pawn := MyPawn white).
+    board at: 'e3' put: MyRook black.
+
+    "trigger: on calcule les cases légalement jouables."
+    "assert-check: e3 ne doit pas être proposé. Un pion ne peut pas avancer si la case immédiatement devant est occupée."
+    self deny: (pawn legalTargetSquares includes: (board at: 'e3'))
+]
+
 { #category : ' tests' }
 MyPawnTests >> testWhiteSingleStepForward [ 
 	
