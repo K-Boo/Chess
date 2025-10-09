@@ -6,6 +6,25 @@ Class {
 }
 
 { #category : 'tests' }
+MyPawnTests >> testBlackDiagonalCaptureOnlyOnOpponent [
+	 
+	 "Dans ce test, je vérifie que la capture diagonale fonctionne uniquement sur une pièce adverse. meme logique que testWhiteDiagonalCaptureOnlyOnOpponent"
+			
+	 "context: pion noir en e7; une tour blanche est en d6 (diagonale avant-gauche pour noir), une tour noire est en f6 (diagonale avant-droite pour noir)."
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e7' put: (pawn := MyPawn black).
+    board at: 'd6' put: MyRook white.
+    board at: 'f6' put: MyRook black.
+
+    "trigger: on calcule les cases légalement jouables."
+    "assert-check: d6 doit être proposée (capture adverse); f6 ne doit pas l’être (pièce alliée). C’est l’équivalent côté noir, avec la direction inversée."
+    self assert: (pawn legalTargetSquares includes: (board at: 'd6')).
+    self deny: (pawn legalTargetSquares includes: (board at: 'f6'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testBlackSingleStepForward [
 	 
 	 "Dans ce test, je place un pion noir en e7 et vérifie que e6 est légal → même logique côté noir (direction inverse)."
