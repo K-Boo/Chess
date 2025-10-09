@@ -36,6 +36,24 @@ MyPawnTests >> testWhiteBlockedForward [
     self deny: (pawn legalTargetSquares includes: (board at: 'e3'))
 ]
 
+{ #category : 'tests' }
+MyPawnTests >> testWhiteDiagonalCaptureOnlyOnOpponent [
+		
+	"Dans ce test, je vérifie que la capture diagonale fonctionne uniquement sur une pièce adverse.	"
+	
+	 "context: ppion blanc en e2; une tour noire est en f3 (diagonale avant-droite), une tour blanche est en d3 (diagonale avant-gauche)"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e2' put: (pawn := MyPawn white).
+    board at: 'f3' put: MyRook black.
+    board at: 'd3' put: MyRook white.
+
+    "trigger: on calcule les cases légalement jouables"
+    "assert-check: f3 doit être proposée (capture d’une pièce adverse); d3 ne doit pas l’être (on ne capture pas une pièce alliée)."
+    self assert: (pawn legalTargetSquares includes: (board at: 'f3')).
+    self deny: (pawn legalTargetSquares includes: (board at: 'd3'))
+]
+
 { #category : ' tests' }
 MyPawnTests >> testWhiteSingleStepForward [ 
 	
