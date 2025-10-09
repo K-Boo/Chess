@@ -5,6 +5,21 @@ Class {
 	#package : 'Myg-Chess-Tests'
 }
 
+{ #category : 'tests' }
+MyPawnTests >> testBlackSingleStepForward [
+	 
+	 "Dans ce test, je place un pion noir en e7 et vérifie que e6 est légal → même logique côté noir (direction inverse)."
+		
+	 "context: un pion noir est posé en e7, la case e6 est libre."
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e7' put: (pawn := MyPawn black).
+
+    "trigger: on calcule ses cases légalement jouables."
+    "assert-check: e6 doit être proposé. Même règle que le pion blanc, mais vers le bas (direction inverse)."
+    self assert: (pawn legalTargetSquares includes: (board at: 'e6'))
+]
+
 { #category : ' tests' }
 MyPawnTests >> testWhiteSingleStepForward [ 
 	
