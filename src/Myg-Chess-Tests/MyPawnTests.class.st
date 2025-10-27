@@ -127,6 +127,19 @@ MyPawnTests >> testWhiteDoubleStepFromStartingRank [
 
 ]
 
+{ #category : 'tests' }
+MyPawnTests >> testWhiteDoubleStepNotAllowedOutsideStartingRank [ 
+    "context: pion blanc en e3 (hors rang de départ 2); e4 et e5 sont vides"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e3' put: (pawn := MyPawn white).
+    
+    "trigger: calcul des cases légales du pion"
+    "assert-check: e5 ∉ legalTargetSquares (double pas interdit hors rang de départ)"
+    self deny: (pawn legalTargetSquares includes: (board at: 'e5'))
+
+]
+
 { #category : ' tests' }
 MyPawnTests >> testWhiteSingleStepForward [ 
 	
