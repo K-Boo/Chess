@@ -25,6 +25,19 @@ MyPawnTests >> testBlackDiagonalCaptureOnlyOnOpponent [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testBlackDoubleStepFromStartingRank [ 
+    "context: pion noir en e7 (rang de départ); e6 et e5 sont vides"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e7' put: (pawn := MyPawn black).
+    
+    "trigger: calcul des cases légales du pion"
+    "assert-check: e5 ∈ legalTargetSquares (double pas autorisé depuis rang de départ)"
+    self assert: (pawn legalTargetSquares includes: (board at: 'e5'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testBlackSingleStepForward [
 	 
 	 "Dans ce test, je place un pion noir en e7 et vérifie que e6 est légal → même logique côté noir (direction inverse)."
