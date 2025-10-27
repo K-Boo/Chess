@@ -87,6 +87,20 @@ MyPawnTests >> testWhiteDiagonalCaptureOnlyOnOpponent [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testWhiteDoubleStepBlockedByIntermediateSquare [ 
+    "context: pion blanc en e2; e3 est occupée; e4 est vide"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e2' put: (pawn := MyPawn white).
+    board at: 'e3' put: MyRook black.
+    
+    "trigger: calcul des cases légales du pion"
+    "assert-check: e4 ∉ legalTargetSquares (intermédiaire occupée)"
+    self deny: (pawn legalTargetSquares includes: (board at: 'e4'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testWhiteDoubleStepFromStartingRank [ 
     "context: pion blanc en e2 (rang de départ); e3 et e4 sont vides"
     | board pawn |
