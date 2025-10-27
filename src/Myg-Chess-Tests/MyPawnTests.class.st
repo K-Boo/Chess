@@ -73,6 +73,19 @@ MyPawnTests >> testWhiteDiagonalCaptureOnlyOnOpponent [
     self deny: (pawn legalTargetSquares includes: (board at: 'd3'))
 ]
 
+{ #category : 'tests' }
+MyPawnTests >> testWhiteDoubleStepFromStartingRank [ 
+    "context: pion blanc en e2 (rang de départ); e3 et e4 sont vides"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e2' put: (pawn := MyPawn white).
+    
+    "trigger: calcul des cases légales du pion"
+    "assert-check: e4 ∈ legalTargetSquares (double pas autorisé depuis rang de départ)"
+    self assert: (pawn legalTargetSquares includes: (board at: 'e4'))
+
+]
+
 { #category : ' tests' }
 MyPawnTests >> testWhiteSingleStepForward [ 
 	
