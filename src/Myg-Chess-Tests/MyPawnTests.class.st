@@ -25,6 +25,20 @@ MyPawnTests >> testBlackDiagonalCaptureOnlyOnOpponent [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testBlackDoubleStepBlockedByIntermediateSquare [ 
+    "context: pion noir en e7; e6 est occupée; e5 est vide"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e7' put: (pawn := MyPawn black).
+    board at: 'e6' put: MyRook white.
+    
+    "trigger: calcul des cases légales du pion"
+    "assert-check: e5 ∉ legalTargetSquares (intermédiaire occupée)"
+    self deny: (pawn legalTargetSquares includes: (board at: 'e5'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testBlackDoubleStepFromStartingRank [ 
     "context: pion noir en e7 (rang de départ); e6 et e5 sont vides"
     | board pawn |
