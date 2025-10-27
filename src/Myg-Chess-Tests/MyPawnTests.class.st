@@ -52,6 +52,19 @@ MyPawnTests >> testBlackDoubleStepFromStartingRank [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testBlackDoubleStepNotAllowedOutsideStartingRank [ 
+    "context: pion noir en e6 (hors rang de départ 7); e5 et e4 sont vides"
+    | board pawn |
+    board := MyChessBoard empty.
+    board at: 'e6' put: (pawn := MyPawn black).
+    
+    "trigger: calcul des cases légales du pion"
+    "assert-check: e4 ∉ legalTargetSquares (double pas interdit hors rang de départ)"
+    self deny: (pawn legalTargetSquares includes: (board at: 'e4'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testBlackSingleStepForward [
 	 
 	 "Dans ce test, je place un pion noir en e7 et vérifie que e6 est légal → même logique côté noir (direction inverse)."
