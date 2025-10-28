@@ -80,6 +80,24 @@ MyPawnTests >> testBlackSingleStepForward [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testEnPassantStateCreatedAfterDoubleStep [ 
+	"context: pion blanc fait e2→e4; pion noir adjacent en f4"
+	| board whitePawn blackPawn game |
+	board := MyChessBoard empty.
+	game := MyChessGame freshGame.
+	board game: game.
+	board at: 'e2' put: (whitePawn := MyPawn white).
+	board at: 'f4' put: (blackPawn := MyPawn black).
+	
+	"trigger: pion blanc fait double pas e2→e4"
+	game move: whitePawn to: (board at: 'e4').
+	
+	"assert-check: état en passant créé (case e3 cible)"
+	self assert: game enPassantTargetSquare equals: 'e3'
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testWhiteBlockedForward [ 
 	 
 	 "Dans ce test, je place un pion blanc en e2 et une pièce sur e3, puis vérifie que e3 n’est pas légal → si la case devant est occupée, on ne peut pas avancer."
