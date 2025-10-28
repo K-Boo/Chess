@@ -134,6 +134,19 @@ MyPawnTests >> testEnPassantStateCreatedAfterDoubleStep [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testPromotionTriggeredAtLastRank [ 
+	"context: pion blanc arrive en e8 (dernière rangée)"
+	| board pawn |
+	board := MyChessBoard empty.
+	board at: 'e7' put: (pawn := MyPawn white).
+	
+	"trigger: calcul des cases légales"
+	"assert-check: e8 ∈ legalTargetSquares (déclenche promotion)"
+	self assert: (pawn legalTargetSquares includes: (board at: 'e8'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testWhiteBlockedForward [ 
 	 
 	 "Dans ce test, je place un pion blanc en e2 et une pièce sur e3, puis vérifie que e3 n’est pas légal → si la case devant est occupée, on ne peut pas avancer."
