@@ -65,6 +65,19 @@ MyPawnTests >> testBlackDoubleStepNotAllowedOutsideStartingRank [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testBlackPromotionTriggeredAtLastRank [ 
+	"context: pion noir arrive en e1 (dernière rangée)"
+	| board pawn |
+	board := MyChessBoard empty.
+	board at: 'e2' put: (pawn := MyPawn black).
+	
+	"trigger: calcul des cases légales"
+	"assert-check: e1 ∈ legalTargetSquares (déclenche promotion)"
+	self assert: (pawn legalTargetSquares includes: (board at: 'e1'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testBlackSingleStepForward [
 	 
 	 "Dans ce test, je place un pion noir en e7 et vérifie que e6 est légal → même logique côté noir (direction inverse)."
