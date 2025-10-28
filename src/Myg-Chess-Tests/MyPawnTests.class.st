@@ -97,6 +97,25 @@ MyPawnTests >> testEnPassantCaptureAllowedImmediately [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testEnPassantExpiresAfterOneMove [ 
+	"context: pion blanc fait e2→e4; pion noir fait autre coup; pion blanc fait autre coup"
+	| board whitePawn blackPawn game |
+	board := MyChessBoard empty.
+	game := MyChessGame freshGame.
+	board game: game.
+	board at: 'e2' put: (whitePawn := MyPawn white).
+	board at: 'f7' put: (blackPawn := MyPawn black).
+	game move: whitePawn to: (board at: 'e4').
+	game move: blackPawn to: (board at: 'f6').
+	game move: whitePawn to: (board at: 'e5').
+	
+	"trigger: vérification état en passant"
+	"assert-check: état en passant effacé"
+	self assert: game enPassantTargetSquare equals: 'NO ENPASSANT'
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testEnPassantStateCreatedAfterDoubleStep [ 
 	"context: pion blanc fait e2→e4; pion noir adjacent en f4"
 	| board whitePawn blackPawn game |
