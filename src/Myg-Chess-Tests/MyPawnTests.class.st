@@ -80,6 +80,23 @@ MyPawnTests >> testBlackSingleStepForward [
 ]
 
 { #category : 'tests' }
+MyPawnTests >> testEnPassantCaptureAllowedImmediately [ 
+	"context: pion blanc vient de faire e2→e4; pion noir en f4 peut capturer en passant"
+	| board whitePawn blackPawn game |
+	board := MyChessBoard empty.
+	game := MyChessGame freshGame.
+	board game: game.
+	board at: 'e2' put: (whitePawn := MyPawn white).
+	board at: 'f4' put: (blackPawn := MyPawn black).
+	game move: whitePawn to: (board at: 'e4').
+	
+	"trigger: calcul des cases légales du pion noir"
+	"assert-check: e3 (en passant) ∈ legalTargetSquares"
+	self assert: (blackPawn legalTargetSquares includes: (board at: 'e3'))
+
+]
+
+{ #category : 'tests' }
 MyPawnTests >> testEnPassantStateCreatedAfterDoubleStep [ 
 	"context: pion blanc fait e2→e4; pion noir adjacent en f4"
 	| board whitePawn blackPawn game |
