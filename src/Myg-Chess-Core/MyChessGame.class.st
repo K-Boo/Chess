@@ -201,17 +201,19 @@ MyChessGame >> move: piece to: square [
 	"Gérer la prise en passant"
 	(self isEnPassantMove: piece to: square) ifTrue: [
 		self executeEnPassantCapture: piece to: square.
+		self clearEnPassantState.
 		^ self ].
-	
-	"Gérer la création d'état en passant après double pas"
+
+	"Effacer l'état en passant précédent si non utilisé"
+	self clearEnPassantState.
+
+	"Créer l'état en passant après un double pas"
 	(self isDoubleStepMove: piece to: square) ifTrue: [
 		self createEnPassantState: piece to: square ].
 	
-	"Effacer l'état en passant après chaque coup"
-	self clearEnPassantState.
-	
 	piece moveTo: square.
 	self recordMovementOf: piece to: square
+
 
 ]
 
