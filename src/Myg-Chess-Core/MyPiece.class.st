@@ -133,7 +133,7 @@ MyPiece >> isKing [
 
 { #category : 'testing' }
 MyPiece >> isPawn [ 
-	^ false
+	^ true
 
 ]
 
