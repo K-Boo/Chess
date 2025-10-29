@@ -18,28 +18,35 @@ MyPawn >> attackingSquares [
 { #category : 'as yet unclassified' }
 MyPawn >> getEnPassantSquare [ 
 	"Retourne la case en passant si elle est disponible"
-	| game enPassantTarget |
-	game := self board game.
-	enPassantTarget := game enPassantTargetSquare.
+	| gameObject enPassantTarget |
+	"Sécuriser l'accès au jeu: certains tests n'attachent pas de game au board"
+	gameObject := self board ifNotNil: #game.
+	gameObject isNil ifTrue: [ ^ nil ].
+	enPassantTarget := gameObject enPassantTargetSquare ifNil: [ 'NO ENPASSANT' ].
 	(enPassantTarget = 'NO ENPASSANT') ifTrue: [ ^ nil ].
 	
 	"Vérifier si cette case est adjacente et en diagonale"
 	^ self attackingSquares detect: [ :s | s name = enPassantTarget ] ifNone: [ nil ]
+
+
 
 ]
 
 { #category : 'as yet unclassified' }
 MyPawn >> getPromotionSquare [ 
 	"Retourne la case de promotion si le pion peut y arriver"
-	| promotionRank |
+	| promotionRank nextSquare |
 	promotionRank := self isWhite ifTrue: [ $8 ] ifFalse: [ $1 ].
 	
 	"Vérifier si on peut avancer vers la dernière rangée"
-	^ self isWhite
+	nextSquare := self isWhite
 		ifTrue: [ square up ]
-		ifFalse: [ square down ]
-			ifNotNil: [ :nextSquare | 
-				nextSquare file = promotionRank ifTrue: [ nextSquare ] ifFalse: [ nil ] ]
+		ifFalse: [ square down ].
+
+	nextSquare isNil ifTrue: [ ^ nil ].
+	^ (nextSquare file = promotionRank)
+		ifTrue: [ nextSquare ]
+		ifFalse: [ nil ]
 
 ]
 
@@ -66,8 +73,8 @@ MyPawn >> renderPieceOn: aSquare [
 
 { #category : 'rendering' }
 MyPawn >> targetSquaresLegal: aBoolean [ 
-	"Calcule les cases légales pour un pion: pas simple, double pas initial, captures diagonales"
-	| forwardSquare doubleStepSquare captureSquares result |
+    "Calcule les cases légales pour un pion: pas simple, double pas initial, captures diagonales, en passant, promotion"
+    | forwardSquare doubleStepSquare captureSquares enPassantSquare promotionSquare result |
 	
 	"Pas simple vers l'avant"
 	forwardSquare := self isWhite
@@ -81,16 +88,25 @@ MyPawn >> targetSquaresLegal: aBoolean [
 			ifFalse: [ forwardSquare down ] ]
 		ifFalse: [ nil ].
 	
-	"Captures diagonales (uniquement sur pièce adverse)"
+    "Captures diagonales (uniquement sur pièce adverse)"
 	captureSquares := (self attackingSquares) select: [ :s |
 		s hasPiece and: [ s contents color ~= color ] ].
+    
+    "En passant et promotion"
+    enPassantSquare := self getEnPassantSquare.
+	 promotionSquare := self getPromotionSquare.
 	
 	"Assemblage du résultat"
 	result := OrderedCollection new.
 	(forwardSquare notNil and: [ forwardSquare hasPiece not ]) ifTrue: [ result add: forwardSquare ].
 	(doubleStepSquare notNil and: [ doubleStepSquare hasPiece not ]) ifTrue: [ result add: doubleStepSquare ].
-	result addAll: captureSquares.
+    result addAll: captureSquares.
+    enPassantSquare ifNotNil: [ result add: enPassantSquare ].
+    promotionSquare ifNotNil: [ result add: promotionSquare ].
 	
 	^ result
+
+
+
 
 ]
