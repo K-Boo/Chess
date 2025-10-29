@@ -15,6 +15,34 @@ MyPawn >> attackingSquares [
 
 ]
 
+{ #category : 'as yet unclassified' }
+MyPawn >> getEnPassantSquare [ 
+	"Retourne la case en passant si elle est disponible"
+	| game enPassantTarget |
+	game := self board game.
+	enPassantTarget := game enPassantTargetSquare.
+	(enPassantTarget = 'NO ENPASSANT') ifTrue: [ ^ nil ].
+	
+	"Vérifier si cette case est adjacente et en diagonale"
+	^ self attackingSquares detect: [ :s | s name = enPassantTarget ] ifNone: [ nil ]
+
+]
+
+{ #category : 'as yet unclassified' }
+MyPawn >> getPromotionSquare [ 
+	"Retourne la case de promotion si le pion peut y arriver"
+	| promotionRank |
+	promotionRank := self isWhite ifTrue: [ $8 ] ifFalse: [ $1 ].
+	
+	"Vérifier si on peut avancer vers la dernière rangée"
+	^ self isWhite
+		ifTrue: [ square up ]
+		ifFalse: [ square down ]
+			ifNotNil: [ :nextSquare | 
+				nextSquare file = promotionRank ifTrue: [ nextSquare ] ifFalse: [ nil ] ]
+
+]
+
 { #category : 'accessing' }
 MyPawn >> id [
 
