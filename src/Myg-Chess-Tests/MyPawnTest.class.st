@@ -1,12 +1,12 @@
 Class {
-	#name : 'MyPawnTests',
+	#name : 'MyPawnTest',
 	#superclass : 'TestCase',
 	#category : 'Myg-Chess-Tests',
 	#package : 'Myg-Chess-Tests'
 }
 
 { #category : 'tests' }
-MyPawnTests >> testBlackDiagonalCaptureOnlyOnOpponent [
+MyPawnTest >> testBlackDiagonalCaptureOnlyOnOpponent [
 	 
 	 "Dans ce test, je vérifie que la capture diagonale fonctionne uniquement sur une pièce adverse. meme logique que testWhiteDiagonalCaptureOnlyOnOpponent"
 			
@@ -25,7 +25,7 @@ MyPawnTests >> testBlackDiagonalCaptureOnlyOnOpponent [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testBlackDoubleStepBlockedByIntermediateSquare [ 
+MyPawnTest >> testBlackDoubleStepBlockedByIntermediateSquare [ 
     "context: pion noir en e7; e6 est occupée; e5 est vide"
     | board pawn |
     board := MyChessBoard empty.
@@ -39,7 +39,7 @@ MyPawnTests >> testBlackDoubleStepBlockedByIntermediateSquare [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testBlackDoubleStepFromStartingRank [ 
+MyPawnTest >> testBlackDoubleStepFromStartingRank [ 
     "context: pion noir en e7 (rang de départ); e6 et e5 sont vides"
     | board pawn |
     board := MyChessBoard empty.
@@ -52,7 +52,7 @@ MyPawnTests >> testBlackDoubleStepFromStartingRank [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testBlackDoubleStepNotAllowedOutsideStartingRank [ 
+MyPawnTest >> testBlackDoubleStepNotAllowedOutsideStartingRank [ 
     "context: pion noir en e6 (hors rang de départ 7); e5 et e4 sont vides"
     | board pawn |
     board := MyChessBoard empty.
@@ -65,7 +65,7 @@ MyPawnTests >> testBlackDoubleStepNotAllowedOutsideStartingRank [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testBlackPromotionTriggeredAtLastRank [ 
+MyPawnTest >> testBlackPromotionTriggeredAtLastRank [ 
 	"context: pion noir arrive en e1 (dernière rangée)"
 	| board pawn |
 	board := MyChessBoard empty.
@@ -78,7 +78,7 @@ MyPawnTests >> testBlackPromotionTriggeredAtLastRank [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testBlackSingleStepForward [
+MyPawnTest >> testBlackSingleStepForward [
 	 
 	 "Dans ce test, je place un pion noir en e7 et vérifie que e6 est légal → même logique côté noir (direction inverse)."
 		
@@ -93,7 +93,7 @@ MyPawnTests >> testBlackSingleStepForward [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testEnPassantCaptureAllowedImmediately [ 
+MyPawnTest >> testEnPassantCaptureAllowedImmediately [ 
 	"context: pion blanc vient de faire e2→e4; pion noir en f4 peut capturer en passant"
 	| board whitePawn blackPawn game |
 	board := MyChessBoard empty.
@@ -110,7 +110,7 @@ MyPawnTests >> testEnPassantCaptureAllowedImmediately [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testEnPassantExpiresAfterOneMove [ 
+MyPawnTest >> testEnPassantExpiresAfterOneMove [ 
 	"context: pion blanc fait e2→e4; pion noir fait autre coup; pion blanc fait autre coup"
 	| board whitePawn blackPawn game |
 	board := MyChessBoard empty.
@@ -129,7 +129,7 @@ MyPawnTests >> testEnPassantExpiresAfterOneMove [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testEnPassantStateCreatedAfterDoubleStep [ 
+MyPawnTest >> testEnPassantStateCreatedAfterDoubleStep [ 
 	"context: pion blanc fait e2→e4; pion noir adjacent en f4"
 	| board whitePawn blackPawn game |
 	board := MyChessBoard empty.
@@ -147,7 +147,7 @@ MyPawnTests >> testEnPassantStateCreatedAfterDoubleStep [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testPromotionTriggeredAtLastRank [ 
+MyPawnTest >> testPromotionTriggeredAtLastRank [ 
 	"context: pion blanc arrive en e8 (dernière rangée)"
 	| board pawn |
 	board := MyChessBoard empty.
@@ -160,7 +160,7 @@ MyPawnTests >> testPromotionTriggeredAtLastRank [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testWhiteBlockedForward [ 
+MyPawnTest >> testWhiteBlockedForward [ 
 	 
 	 "Dans ce test, je place un pion blanc en e2 et une pièce sur e3, puis vérifie que e3 n’est pas légal → si la case devant est occupée, on ne peut pas avancer."
 		
@@ -176,7 +176,7 @@ MyPawnTests >> testWhiteBlockedForward [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testWhiteDiagonalCaptureOnlyOnOpponent [
+MyPawnTest >> testWhiteDiagonalCaptureOnlyOnOpponent [
 		
 	"Dans ce test, je vérifie que la capture diagonale fonctionne uniquement sur une pièce adverse.	"
 	
@@ -194,7 +194,7 @@ MyPawnTests >> testWhiteDiagonalCaptureOnlyOnOpponent [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testWhiteDoubleStepBlockedByIntermediateSquare [ 
+MyPawnTest >> testWhiteDoubleStepBlockedByIntermediateSquare [ 
     "context: pion blanc en e2; e3 est occupée; e4 est vide"
     | board pawn |
     board := MyChessBoard empty.
@@ -208,7 +208,7 @@ MyPawnTests >> testWhiteDoubleStepBlockedByIntermediateSquare [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testWhiteDoubleStepFromStartingRank [ 
+MyPawnTest >> testWhiteDoubleStepFromStartingRank [ 
     "context: pion blanc en e2 (rang de départ); e3 et e4 sont vides"
     | board pawn |
     board := MyChessBoard empty.
@@ -221,7 +221,7 @@ MyPawnTests >> testWhiteDoubleStepFromStartingRank [
 ]
 
 { #category : 'tests' }
-MyPawnTests >> testWhiteDoubleStepNotAllowedOutsideStartingRank [ 
+MyPawnTest >> testWhiteDoubleStepNotAllowedOutsideStartingRank [ 
     "context: pion blanc en e3 (hors rang de départ 2); e4 et e5 sont vides"
     | board pawn |
     board := MyChessBoard empty.
@@ -234,7 +234,7 @@ MyPawnTests >> testWhiteDoubleStepNotAllowedOutsideStartingRank [
 ]
 
 { #category : ' tests' }
-MyPawnTests >> testWhiteSingleStepForward [ 
+MyPawnTest >> testWhiteSingleStepForward [ 
 	
 	 "Dans ce test, je place un pion blanc en e2 et vérifie que e3 est dans ses cases légales → valide le pas simple vers l’avant si la case est vide."
 
