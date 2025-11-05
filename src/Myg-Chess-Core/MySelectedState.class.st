@@ -51,5 +51,5 @@ MySelectedState >> selection [
 { #category : 'accessing' }
 MySelectedState >> selection: anObject [
 
-	selection := anObject
+		selection := anObject
 ]

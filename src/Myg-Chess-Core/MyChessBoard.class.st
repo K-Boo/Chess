@@ -37,9 +37,7 @@ MyChessBoard class >> new [
 { #category : 'accessing' }
 MyChessBoard >> at: coordinate [
 
-	 ^ grid at: coordinate ifAbsent: [ nil ]
-
-
+	^ grid at: coordinate ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -90,7 +88,6 @@ MyChessBoard >> game: aGame [
 { #category : 'highlighting' }
 MyChessBoard >> highLightTargets: squares [
 
-	"squares do: [ :sq | sq highlightTarget ]"
 	squares do: [ :sq | sq ifNotNil: #highlightTarget ]
 ]
 
@@ -223,9 +220,7 @@ MyChessBoard >> initializeSquares [
 { #category : 'accessing' }
 MyChessBoard >> pieces [
 	
-	 ^ children collect: [ :square | square contents ]
-
-
+	^ children collect: [ :square | square contents ]
 ]
 
 { #category : 'accessing' }
@@ -242,6 +237,7 @@ MyChessBoard >> selected: aMyChessSquare [
 
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
+
    squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
 
 ]
