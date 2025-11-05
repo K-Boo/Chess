@@ -213,6 +213,13 @@ MyChessSquare >> renderBishop: aPiece [
 ]
 
 { #category : 'rendering' }
+MyChessSquare >> renderBlackBishop [
+	^ color isBlack
+				  ifFalse: [ 'V' ]
+				  ifTrue: [ 'v' ].
+]
+
+{ #category : 'rendering' }
 MyChessSquare >> renderBlackKnight [ 
 	^ color isBlack
 		ifTrue: [ 'm' ]
@@ -287,6 +294,13 @@ MyChessSquare >> renderRook: aPiece [
 			  color isBlack
 				  ifFalse: [ 'R' ]
 				  ifTrue: [ 'r' ] ]
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteBishop [
+	^ color isBlack
+				  ifFalse: [ 'B' ]
+				  ifTrue: [ 'b' ].
 ]
 
 { #category : 'rendering' }
