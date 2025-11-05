@@ -31,7 +31,62 @@ Vérifie que toutes les instances de MyEmptyPiece sont identiques, garantissant 
 
 # Etape 2 : Création de MyEmptyPiece
 On crée MyEmptyPiece qui hérite de myPiece. On redefini un certain nombre de de méthodes selon les propriétés d'une case vide. Un objet MyEmptyPiece : n'est pas une piece, n'a pas de couleur, ne bouge pas. On redéfini les méthodes moveTo: (EmptyPiece ne bouge pas) et renderPieceOn: (EmptyPiece ne renvoie rien) ainsi que les méthode sur les couleurs (hasColor, color) et états (isPiece, isEmpty).
+```
+Class {
+	#name : 'MyEmptyPiece',
+	#superclass : 'MyPiece',
+	#instVars : [
+		'INSTANCE'
+	],
+	#classInstVars : [
+		'INSTANCE'
+	],
+	#category : 'Myg-Chess-Core',
+	#package : 'Myg-Chess-Core'
+}
 
+{ #category : 'accessing' }
+MyEmptyPiece class >> instance [
+    "Retourne l'instance unique d'EmptyPiece"
+    ^ INSTANCE ifNil: [ INSTANCE := super new ]
+]
+
+{ #category : 'instance creation' }
+MyEmptyPiece class >> new [
+    ^ self instance
+]
+
+{ #category : 'accessing' }
+MyEmptyPiece >> color [
+    ^ nil
+]
+
+{ #category : 'testing' }
+MyEmptyPiece >> hasColor [
+    ^ false
+]
+
+{ #category : 'testing' }
+MyEmptyPiece >> isEmpty [
+    ^ true
+]
+
+{ #category : 'testing' }
+MyEmptyPiece >> isPiece [
+    ^ false
+]
+
+{ #category : 'path commands' }
+MyEmptyPiece >> moveTo: aSquare [
+    ^ self
+
+]
+
+{ #category : 'rendering' }
+MyEmptyPiece >> targetSquaresLegal: aBoolean [
+    ^ OrderedCollection new
+]
+```
 L'objet MyEmptyPiece utilisera le design pattern singleton. Ainsi toutes les cases vides partagent la même instance de MyEmptyPiece.
 
 On déclare ensuite toutes les cases vides comme des MyEmptyPiece (nil->MyEmptyPiece instance) dans MyChessBoard >> initializesquares :
