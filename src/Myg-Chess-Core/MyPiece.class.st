@@ -132,12 +132,6 @@ MyPiece >> isKing [
 ]
 
 { #category : 'testing' }
-MyPiece >> isPawn [ 
-	^ true
-
-]
-
-{ #category : 'testing' }
 MyPiece >> isPiece [
 	
 	^ true
