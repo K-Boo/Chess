@@ -53,3 +53,42 @@ On déclare ensuite toutes les cases vides comme des MyEmptyPiece (nil->MyEmptyP
 ```
 
 # Etape 3 : Intégration des MyEmptyPiece dans le game
+On change d'abord MyChessSquare >> emptyContents
+```
+emptyContents
+	"self contents: nil"
+	self contents: MyEmptyPiece instance
+```
+désormais une case laissé vide dans moveTo: deviendra une MyEmptyPiece.
+
+On redefinit MyChessSquare >> hasPiece 
+```
+hasPiece
+	"^ contents isNil not"
+    ^ contents isPiece
+```
+hasPiece verifit maitenant si l'objet pointé est une pièce ou non (pièce classique ou piece vide).
+
+On modifie enfin la méthode MyChessSquare >> contents:
+```
+contents: aPiece
+
+	| text |
+	contents := aPiece.
+
+	text := contents renderPieceOn: self .
+
+	piece text: (text asRopedText
+			 fontSize: 48;
+			 foreground: self foreground;
+			 fontName: MyOpenChessDownloadedFont new familyName)
+```
+On appelle renderPieceOn dans tout les cas, si c'est une MyEmptyPiece le traitement original de la couleur se fera dans MyEmptyPiece>>renderPieceOn:
+```
+renderPieceOn: aSquare
+    ^ aSquare color isBlack
+        ifTrue: [ 'x' ]
+        ifFalse: [ 'z' ]
+```
+
+On utilisera le MyEmptyPiece seulement pour les cases vides du plateau, on ne gère pas le hors plateau. On pourrait cependant utiliser le même principe de polymorphisme pour gérer ce cas et supprimer les derniers Nil Check.
