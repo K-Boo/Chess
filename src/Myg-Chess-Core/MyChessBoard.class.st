@@ -38,7 +38,7 @@ MyChessBoard class >> new [
 MyChessBoard >> at: coordinate [
 
 	 ^ grid at: coordinate ifAbsent: [ nil ]
-    "^ grid at: coordinate ifAbsent: [ MyEmptyPiece instance ]"
+
 
 ]
 
@@ -224,10 +224,7 @@ MyChessBoard >> initializeSquares [
 MyChessBoard >> pieces [
 	
 	 ^ children collect: [ :square | square contents ]
-    "| squares pieces |
-    squares := children select: [ :child | child isKindOf: MyChessSquare ].
-    pieces := squares collect: [ :sq | sq contents ].
-    ^ pieces select: [ :p | p isPiece ]"
+
 
 ]
 
@@ -246,7 +243,7 @@ MyChessBoard >> selected: aMyChessSquare [
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
    squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
-	"squares do: [ :sq | sq unhighlightTarget ]"
+
 ]
 
 { #category : 'selection' }
