@@ -50,7 +50,9 @@ MyEmptyPiece >> moveTo: aSquare [
 
 { #category : 'rendering' }
 MyEmptyPiece >> renderPieceOn: aSquare [
-    "Ne fait rien pour les cases vides"
+    ^ aSquare color isBlack
+        ifTrue: [ 'x' ]
+        ifFalse: [ 'z' ]
 ]
 
 { #category : 'rendering' }
