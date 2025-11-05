@@ -37,7 +37,8 @@ MyChessBoard class >> new [
 { #category : 'accessing' }
 MyChessBoard >> at: coordinate [
 
-    ^ grid at: coordinate ifAbsent: [ MyEmptyPiece instance ]
+	 ^ grid at: coordinate ifAbsent: [ nil ]
+    "^ grid at: coordinate ifAbsent: [ MyEmptyPiece instance ]"
 
 ]
 
@@ -89,7 +90,8 @@ MyChessBoard >> game: aGame [
 { #category : 'highlighting' }
 MyChessBoard >> highLightTargets: squares [
 
-	squares do: [ :sq | sq highlightTarget ]
+	"squares do: [ :sq | sq highlightTarget ]"
+	squares do: [ :sq | sq ifNotNil: #highlightTarget ]
 ]
 
 { #category : 'initialization' }
@@ -202,7 +204,7 @@ MyChessBoard >> initializeSquares [
 						          color: Color black;
 						          board: self;
 						          initialize;
-						          contents: MyEmptyPiece instance;
+						          contents: nil;"MyEmptyPiece instance"
 						          yourself ]
 				          ifFalse: [
 					          black := true.
@@ -210,7 +212,7 @@ MyChessBoard >> initializeSquares [
 						          color: Color white;
 						          board: self;
 						          initialize;
-						          contents: MyEmptyPiece instance;
+						          contents: nil;"MyEmptyPiece instance"
 						          yourself ].
 			square name: squareNotation.
 			grid at: squareNotation put: square.
@@ -221,11 +223,11 @@ MyChessBoard >> initializeSquares [
 { #category : 'accessing' }
 MyChessBoard >> pieces [
 	
-	 "^ children collect: [ :square | square contents ]"
-    | squares pieces |
+	 ^ children collect: [ :square | square contents ]
+    "| squares pieces |
     squares := children select: [ :child | child isKindOf: MyChessSquare ].
     pieces := squares collect: [ :sq | sq contents ].
-    ^ pieces select: [ :p | p isPiece ]
+    ^ pieces select: [ :p | p isPiece ]"
 
 ]
 
@@ -243,14 +245,14 @@ MyChessBoard >> selected: aMyChessSquare [
 
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
-
-	squares do: [ :sq | sq unhighlightTarget ]
+   squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
+	"squares do: [ :sq | sq unhighlightTarget ]"
 ]
 
 { #category : 'selection' }
 MyChessBoard >> unselectSelected [
 	
-	"selected ifNil: [ ^ self ]."
+	selected ifNil: [ ^ self ].
 	selected doUnselect
 ]
 
