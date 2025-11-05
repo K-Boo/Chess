@@ -26,12 +26,13 @@ MyBoardTest >> testEmptyPieceIsSingleton [
 { #category : 'tests' }
 MyBoardTest >> testEmptyPiecePolymorphism [
 "Vérifie que MyEmptyPiece se comporte comme une pièce polymorphique"
-    | empty |
-    empty := MyEmptyPiece new.
+ 	| result empty |
+    empty := MyEmptyPiece instance.
 
     self assert: empty isEmpty.
     self deny: empty isPiece.
-    self assert: (empty moveTo: nil == empty).
+	 result := empty moveTo: nil.
+	 self assert: (result isKindOf: MyEmptyPiece).
     self deny: empty hasColor.
 ]
 

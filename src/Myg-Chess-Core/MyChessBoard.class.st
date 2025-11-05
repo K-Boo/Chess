@@ -37,13 +37,14 @@ MyChessBoard class >> new [
 { #category : 'accessing' }
 MyChessBoard >> at: coordinate [
 
-	^ grid at: coordinate ifAbsent: nil
+    ^ grid at: coordinate ifAbsent: [ MyEmptyPiece instance ]
+
 ]
 
 { #category : 'accessing' }
 MyChessBoard >> at: aString ifAbsent: aFullBlockClosure [
 
-	^ grid at: aString ifAbsent: aFullBlockClosure
+	^ grid at: aString ifAbsent: aFullBlockClosure 
 ]
 
 { #category : 'accessing' }
@@ -88,7 +89,7 @@ MyChessBoard >> game: aGame [
 { #category : 'highlighting' }
 MyChessBoard >> highLightTargets: squares [
 
-	squares do: [ :sq | sq ifNotNil: #highlightTarget ]
+	squares do: [ :sq | sq highlightTarget ]
 ]
 
 { #category : 'initialization' }
@@ -220,7 +221,12 @@ MyChessBoard >> initializeSquares [
 { #category : 'accessing' }
 MyChessBoard >> pieces [
 	
-	^ children collect: [ :square | square contents ]
+	 "^ children collect: [ :square | square contents ]"
+    | squares pieces |
+    squares := children select: [ :child | child isKindOf: MyChessSquare ].
+    pieces := squares collect: [ :sq | sq contents ].
+    ^ pieces select: [ :p | p isPiece ]
+
 ]
 
 { #category : 'accessing' }
@@ -238,13 +244,13 @@ MyChessBoard >> selected: aMyChessSquare [
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
 
-	squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
+	squares do: [ :sq | sq unhighlightTarget ]
 ]
 
 { #category : 'selection' }
 MyChessBoard >> unselectSelected [
 	
-	selected ifNil: [ ^ self ].
+	"selected ifNil: [ ^ self ]."
 	selected doUnselect
 ]
 

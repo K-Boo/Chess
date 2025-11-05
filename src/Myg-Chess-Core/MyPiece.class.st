@@ -51,7 +51,7 @@ MyPiece >> collectSquares: aBlock legal: shouldBeLegal [
 ]
 
 { #category : 'rendering' }
-MyPiece >> collectSquares: collectBlock while: untilBlock [
+MyPiece >> collectSquares: collectBlock while: untilBlock [ 
 
 	| targets next |
 	targets := OrderedCollection new.
@@ -65,6 +65,7 @@ MyPiece >> collectSquares: collectBlock while: untilBlock [
 	(next notNil and: [ next contents color ~= color ]) ifTrue: [ targets add: next ].
 
 	^ targets
+
 ]
 
 { #category : 'accessing' }

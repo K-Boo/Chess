@@ -42,7 +42,7 @@ MyChessSquare >> + aPoint [
 	column := (self column asciiValue + aPoint x) asCharacter asString.
 	file := (self file asciiValue + aPoint y) asCharacter asString.
 
-	^ board at: column , file ifAbsent: [ ^ nil ]
+	^ board at: column , file ifAbsent: [ ^ MyEmptyPiece instance ]
 ]
 
 { #category : 'accessing' }
@@ -87,7 +87,7 @@ MyChessSquare >> contents [
 
 { #category : 'accessing' }
 MyChessSquare >> contents: aPiece [
-
+"
 	| text |
 	contents := aPiece.
 
@@ -100,7 +100,9 @@ MyChessSquare >> contents: aPiece [
 	piece text: (text asRopedText
 			 fontSize: 48;
 			 foreground: self foreground;
-			 fontName: MyOpenChessDownloadedFont new familyName)
+			 fontName: MyOpenChessDownloadedFont new familyName)"
+  contents := aPiece.
+  contents renderPieceOn: self.  
 ]
 
 { #category : 'api - configuration' }
@@ -112,7 +114,7 @@ MyChessSquare >> down [
 { #category : 'asd' }
 MyChessSquare >> emptyContents [
 	
-	self contents: nil
+	self contents: MyEmptyPiece instance
 ]
 
 { #category : 'accessing' }
@@ -131,8 +133,10 @@ MyChessSquare >> foreground [
 
 { #category : 'testing' }
 MyChessSquare >> hasPiece [
+	"
+	^ contents isNil not"
+    ^ contents isPiece
 	
-	^ contents isNil not
 ]
 
 { #category : 'highlighting' }

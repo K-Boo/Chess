@@ -52,3 +52,8 @@ MyEmptyPiece >> moveTo: aSquare [
 MyEmptyPiece >> renderPieceOn: aSquare [
     "Ne fait rien pour les cases vides"
 ]
+
+{ #category : 'rendering' }
+MyEmptyPiece >> targetSquaresLegal: aBoolean [
+    ^ OrderedCollection new
+]
