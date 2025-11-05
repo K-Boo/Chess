@@ -95,6 +95,25 @@ MyBoardTest >> testMovePieceToEmptySquare [
     self assert: (to contents == piece).                  "Case de destination contient la pièce"
 
 ]
+
+{ #category : 'tests' }
+MyBoardTest >> testMovePieceEmptiesOriginalSquare [
+"Vérifie que lorsqu'on déplace un pion, sa case d'origine devient une MyEmptyPiece"
+    | from to piece |
+    from := board at: 'b2'.
+    to := board at: 'b3'.
+    
+    piece := MyPawn white.
+    board at: 'b2' put: piece.
+
+    self assert: (from contents == piece).
+    self deny: (from contents isKindOf: MyEmptyPiece).
+
+    piece moveTo: to.
+
+    self assert: (from contents isKindOf: MyEmptyPiece). "La case d'origine est vide"
+    self assert: (to contents == piece).                  "La destination contient la pièce"
+]
 ```
 
 # Etape 2 : Création de MyEmptyPiece
