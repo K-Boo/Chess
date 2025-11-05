@@ -47,3 +47,8 @@ MyEmptyPiece >> moveTo: aSquare [
     ^ self
 
 ]
+
+{ #category : 'rendering' }
+MyEmptyPiece >> renderPieceOn: aSquare [
+    "Ne fait rien pour les cases vides"
+]

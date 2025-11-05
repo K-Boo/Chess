@@ -201,7 +201,7 @@ MyChessBoard >> initializeSquares [
 						          color: Color black;
 						          board: self;
 						          initialize;
-						          contents: nil;
+						          contents: MyEmptyPiece instance;
 						          yourself ]
 				          ifFalse: [
 					          black := true.
@@ -209,7 +209,7 @@ MyChessBoard >> initializeSquares [
 						          color: Color white;
 						          board: self;
 						          initialize;
-						          contents: nil;
+						          contents: MyEmptyPiece instance;
 						          yourself ].
 			square name: squareNotation.
 			grid at: squareNotation put: square.
