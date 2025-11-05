@@ -11,23 +11,91 @@ Le kata "Remove nil check" vise le refactoring avec comme mission principale la 
 
 # Etape 1 : Création de tests
 Dans cette étape, j'ai défini une suite de tests unitaires pour valider le comportement du plateau d’échecs et des cases vides (MyEmptyPiece) en suivant la démarche TDD :
+```
+Class {
+	#name : 'MyBoardTest',
+	#superclass : 'TestCase',
+	#instVars : [
+		'board'
+	],
+	#category : 'Myg-Chess-Tests',
+	#package : 'Myg-Chess-Tests'
+}
 
-Tests sur les cases vides
+{ #category : 'running' }
+MyBoardTest >> setUp [
+"initialise le plateau pour les tests"
+    board := MyChessBoard empty.
+    board initialize.
+]
 
-Vérification que les cases initialement vides contiennent MyEmptyPiece au lieu de nil.
+{ #category : 'tests' }
+MyBoardTest >> testEmptyPieceIsSingleton [
+    | e1 e2 |
+    e1 := MyEmptyPiece new.
+    e2 := MyEmptyPiece new.
+    self assert: e1 == e2. "Toutes les cases vides partagent la même instance"
+]
 
-Vérification du polymorphisme de MyEmptyPiece : isEmpty → vrai, isPiece → faux, moveTo: renvoie self, aucune couleur.
+{ #category : 'tests' }
+MyBoardTest >> testEmptyPiecePolymorphism [
+"Vérifie que MyEmptyPiece se comporte comme une pièce polymorphique"
+ 	| result empty |
+    empty := MyEmptyPiece instance.
 
-Test de déplacement d’un EmptyPiece : ne modifie ni la case de départ ni la case cible.
+    self assert: empty isEmpty.
+    self deny: empty isPiece.
+	 result := empty moveTo: nil.
+	 self assert: (result isKindOf: MyEmptyPiece).
+    self deny: empty hasColor.
+]
 
-Tests sur les pièces normales
+{ #category : 'tests' }
+MyBoardTest >> testEmptySquareContainsEmptyPiece [
+"une case vide contient une MyEmptyPiece"
+    | square |
+    square := board at: 'a3'.
+    self assert: (square contents isKindOf: MyEmptyPiece).
+]
 
-Vérification de la présence d’une pièce après mouvement dans une case vide.
+{ #category : 'tests' }
+MyBoardTest >> testHasPiece [
+"Vérifie que hasPiece fonctionne correctement sans nil-check"
+    | square piece |
+    square := board at: 'a3'.
+    self deny: square hasPiece.
 
-Déplacement d’une pièce vers une case vide : la case d’origine devient un EmptyPiece et la case cible contient la pièce.
+    piece := MyPawn white.
+    board at: 'a3' put: piece.
+    self assert: square hasPiece.
+]
 
-Vérifie que toutes les instances de MyEmptyPiece sont identiques, garantissant l’unicité.
+{ #category : 'tests' }
+MyBoardTest >> testMoveEmptyPieceDoesNothing [
+"Vérifier que deplacer une MyEmptyPiece ne fait rien"
+    | empty to |
+    empty := (board at: 'a4') contents. 
+    to := board at: 'a5'.
+    empty moveTo: to.
+    
+    self assert: ((board at: 'a4') contents == empty). "La case reste vide"
+    self assert: ((board at: 'a5') contents isKindOf: MyEmptyPiece). "La destination reste vide"
+]
 
+{ #category : 'tests' }
+MyBoardTest >> testMovePieceToEmptySquare [
+"Déplacer une pièce vers une case vide"
+    | from to piece |
+    from := board at: 'a2'.
+    to := board at: 'a3'.
+    piece := MyPawn white.
+    board at: 'a2' put: piece.
+    piece moveTo: to.
+    self assert: (from contents isKindOf: MyEmptyPiece). "Case d'origine devient vide"
+    self assert: (to contents == piece).                  "Case de destination contient la pièce"
+
+]
+```
 
 # Etape 2 : Création de MyEmptyPiece
 On crée MyEmptyPiece qui hérite de myPiece. On redefini un certain nombre de de méthodes selon les propriétés d'une case vide. Un objet MyEmptyPiece : n'est pas une piece, n'a pas de couleur, ne bouge pas. On redéfini les méthodes moveTo: (EmptyPiece ne bouge pas) et renderPieceOn: (EmptyPiece ne renvoie rien) ainsi que les méthode sur les couleurs (hasColor, color) et états (isPiece, isEmpty).
