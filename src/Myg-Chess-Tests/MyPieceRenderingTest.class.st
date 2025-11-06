@@ -127,6 +127,30 @@ MyPieceRenderingTest >> testRenderBlackQueenOnWhiteSquare [
 	self assert: (queen renderPieceOn: square) equals: 'W'.
 ]
 
+{ #category : 'rookRendering' }
+MyPieceRenderingTest >> testRenderBlackRookOnBlackSquare [ 
+	"context: une tour noire est créée et une case noire est créée"
+	| square rook |
+	square := MyChessSquare black.
+	rook := MyRook black.
+	
+	"trigger: on demande le rendu de la tour noire sur la case noire"
+	"assert-check: le caractère retourné doit être 't' (tour noire sur case noire)"
+	self assert: (rook renderPieceOn: square) equals: 't'.
+]
+
+{ #category : 'rookRendering' }
+MyPieceRenderingTest >> testRenderBlackRookOnWhiteSquare [ 
+	"context: une tour noire est créée et une case blanche est créée"
+	| square rook |
+	square := MyChessSquare white.
+	rook := MyRook black.
+	
+	"trigger: on demande le rendu de la tour noire sur la case blanche"
+	"assert-check: le caractère retourné doit être 'T' (tour noire sur case blanche)"
+	self assert: (rook renderPieceOn: square) equals: 'T'.
+]
+
 { #category : 'bishopRendering' }
 MyPieceRenderingTest >> testRenderWhiteBishopOnBlackSquare [ 
 	"context: un fou blanc est créé et une case noire est créée"
@@ -250,4 +274,28 @@ MyPieceRenderingTest >> testRenderWhiteQueenOnWhiteSquare [
 	"trigger: on demande le rendu de la reine blanche sur la case blanche"
 	"assert-check: le caractère retourné doit être 'Q' (reine blanche sur case blanche)"
 	self assert: (queen renderPieceOn: square) equals: 'Q'.
+]
+
+{ #category : 'rookRendering' }
+MyPieceRenderingTest >> testRenderWhiteRookOnBlackSquare [ 
+	"context: une tour blanche est créée et une case noire est créée"
+	| square rook |
+	square := MyChessSquare black.
+	rook := MyRook white.
+	
+	"trigger: on demande le rendu de la tour blanche sur la case noire"
+	"assert-check: le caractère retourné doit être 'r' (tour blanche sur case noire)"
+	self assert: (rook renderPieceOn: square) equals: 'r'.
+]
+
+{ #category : 'rookRendering' }
+MyPieceRenderingTest >> testRenderWhiteRookOnWhiteSquare [ 
+	"context: une tour blanche est créée et une case blanche est créée"
+	| square rook |
+	square := MyChessSquare white.
+	rook := MyRook white.
+	
+	"trigger: on demande le rendu de la tour blanche sur la case blanche"
+	"assert-check: le caractère retourné doit être 'R' (tour blanche sur case blanche)"
+	self assert: (rook renderPieceOn: square) equals: 'R'.
 ]
