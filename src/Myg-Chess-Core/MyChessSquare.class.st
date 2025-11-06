@@ -59,7 +59,7 @@ MyChessSquare >> board: aMyChessBoard [
 { #category : 'initialization' }
 MyChessSquare >> click [
 
-	board click:  self
+	board click: self
 ]
 
 { #category : 'accessing' }
@@ -91,16 +91,13 @@ MyChessSquare >> contents: aPiece [
 	| text |
 	contents := aPiece.
 
-	text := contents
-		        ifNil: [
-			        color isBlack
-				        ifFalse: [ 'z' ]
-				        ifTrue: [ 'x' ] ]
-		        ifNotNil: [ contents renderPieceOn: self ].
+	text := contents renderPieceOn: self .
+
 	piece text: (text asRopedText
 			 fontSize: 48;
 			 foreground: self foreground;
 			 fontName: MyOpenChessDownloadedFont new familyName)
+ 
 ]
 
 { #category : 'api - configuration' }
@@ -111,8 +108,8 @@ MyChessSquare >> down [
 
 { #category : 'asd' }
 MyChessSquare >> emptyContents [
-	
-	self contents: nil
+	"self contents: nil"
+	self contents: MyEmptyPiece instance
 ]
 
 { #category : 'accessing' }
@@ -132,7 +129,9 @@ MyChessSquare >> foreground [
 { #category : 'testing' }
 MyChessSquare >> hasPiece [
 	
-	^ contents isNil not
+	"^ contents isNil not"
+    ^ contents isPiece
+	
 ]
 
 { #category : 'highlighting' }
@@ -199,86 +198,90 @@ MyChessSquare >> printOn: aStream [
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderBishop: aPiece [
-
-	^ aPiece isWhite
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'B' ]
-				  ifTrue: [ 'b' ] ]
-		  ifFalse: [
-			  color isBlack
+MyChessSquare >> renderBlackBishop [
+	^ color isBlack
 				  ifFalse: [ 'V' ]
-				  ifTrue: [ 'v' ] ]
+				  ifTrue: [ 'v' ].
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderKing: aPiece [
-
-	^ aPiece isWhite
-		  ifFalse: [
-			  color isBlack
-				  ifFalse: [ 'L' ]
-				  ifTrue: [ 'l' ] ]
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'K' ]
-				  ifTrue: [ 'k' ] ]
+MyChessSquare >> renderBlackKing [
+	^ color isBlack
+				ifTrue: [ 'l' ]
+				ifFalse: [ 'L' ].
+				  
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderKnight: aPiece [
+MyChessSquare >> renderBlackKnight [ 
+	^ color isBlack
+		ifTrue: [ 'm' ]
+		ifFalse: [ 'M' ].
 
-	^ aPiece isWhite
-		  ifFalse: [ color isBlack
-				  ifFalse: [ 'M' ]
-				  ifTrue: [ 'm' ] ]
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'N' ]
-				  ifTrue: [ 'n' ] ]
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderPawn: aPiece [
-
-	^ aPiece isWhite
-		  ifFalse: [
-			  color isBlack
+MyChessSquare >> renderBlackPawn [
+	^ color isBlack
 				  ifFalse: [ 'O' ]
-				  ifTrue: [ 'o' ] ]
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'P' ]
-				  ifTrue: [ 'p' ] ]
+				  ifTrue: [ 'o' ].
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderQueen: aPiece [
-
-	^ aPiece isWhite
-		  ifFalse: [
-			  color isBlack
+MyChessSquare >> renderBlackQueen [
+		^ color isBlack
 				  ifFalse: [ 'W' ]
-				  ifTrue: [ 'w' ] ]
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'Q' ]
-				  ifTrue: [ 'q' ] ]
+				  ifTrue: [ 'w' ].
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderRook: aPiece [
+MyChessSquare >> renderBlackRook [
+	^ color isBlack
+		ifTrue: [ 't' ]
+		ifFalse: [ 'T' ].
+]
 
-	^ aPiece isWhite
-		  ifFalse: [
-			  color isBlack
-				  ifFalse: [ 'T' ]
-				  ifTrue: [ 't' ] ]
-		  ifTrue: [
-			  color isBlack
-				  ifFalse: [ 'R' ]
-				  ifTrue: [ 'r' ] ]
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteBishop [
+	^ color isBlack
+				  ifFalse: [ 'B' ]
+				  ifTrue: [ 'b' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteKing [
+	^ color isBlack
+				ifTrue: [ 'k' ]
+				ifFalse: [ 'K' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteKnight [ 
+	^ color isBlack
+		ifTrue: [ 'n' ]
+		ifFalse: [ 'N' ].
+
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhitePawn [
+	^ color isBlack
+				  ifFalse: [ 'P' ]
+				  ifTrue: [ 'p' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteQueen [
+		^ color isBlack
+				  ifFalse: [ 'Q' ]
+				  ifTrue: [ 'q' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteRook [ 
+	^ color isBlack
+		ifTrue: [ 'r' ]
+		ifFalse: [ 'R' ].
 ]
 
 { #category : 'accessing' }

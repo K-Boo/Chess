@@ -59,57 +59,22 @@ MyPawn >> id [
 	^ 'P'
 ]
 
-{ #category : 'testing' }
-MyPawn >> isOnStartingRank [ 
-	"Vérifie si le pion est sur sa rangée de départ"
-	^ self isWhite
-		ifTrue: [ square file = $2 ]
-		ifFalse: [ square file = $7 ]
-
+{ #category : 'rendering' }
+MyPawn >> renderBlackPieceOn: aSquare [ 
+	^ aSquare renderBlackPawn.
 ]
 
 { #category : 'rendering' }
-MyPawn >> renderPieceOn: aSquare [ 
-	
-	^ aSquare renderPawn:  self
+MyPawn >> renderWhitePieceOn: aSquare [ 
+	^ aSquare renderWhitePawn.
 ]
 
 { #category : 'rendering' }
-MyPawn >> targetSquaresLegal: aBoolean [ 
-    "Calcule les cases légales pour un pion: pas simple, double pas initial, captures diagonales, en passant, promotion"
-    | forwardSquare doubleStepSquare captureSquares enPassantSquare promotionSquare result |
-	
-	"Pas simple vers l'avant"
-	forwardSquare := self isWhite
-		ifTrue: [ square up ]
-		ifFalse: [ square down ].
-	
-	"Double pas initial (seulement depuis rang de départ)"
-	doubleStepSquare := (self isOnStartingRank and: [ forwardSquare notNil and: [ forwardSquare hasPiece not ] ])
-		ifTrue: [ self isWhite
-			ifTrue: [ forwardSquare up ]
-			ifFalse: [ forwardSquare down ] ]
-		ifFalse: [ nil ].
-	
-    "Captures diagonales (uniquement sur pièce adverse)"
-	captureSquares := (self attackingSquares) select: [ :s |
-		s hasPiece and: [ s contents color ~= color ] ].
-    
-    "En passant et promotion"
-    enPassantSquare := self getEnPassantSquare.
-	 promotionSquare := self getPromotionSquare.
-	
-	"Assemblage du résultat"
-	result := OrderedCollection new.
-	(forwardSquare notNil and: [ forwardSquare hasPiece not ]) ifTrue: [ result add: forwardSquare ].
-	(doubleStepSquare notNil and: [ doubleStepSquare hasPiece not ]) ifTrue: [ result add: doubleStepSquare ].
-    result addAll: captureSquares.
-    enPassantSquare ifNotNil: [ result add: enPassantSquare ].
-    promotionSquare ifNotNil: [ result add: promotionSquare ].
-	
-	^ result
+MyPawn >> targetSquaresLegal: aBoolean [
 
-
-
-
+	^ (self isWhite
+		   ifTrue: [ { square up } ]
+		   ifFalse: [ { square down } ]) select: [ :s |
+		  s notNil and: [
+			  s hasPiece not or: [ s contents color ~= color ] ] ]
 ]

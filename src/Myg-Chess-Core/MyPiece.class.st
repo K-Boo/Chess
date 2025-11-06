@@ -132,12 +132,6 @@ MyPiece >> isKing [
 ]
 
 { #category : 'testing' }
-MyPiece >> isPawn [ 
-	^ true
-
-]
-
-{ #category : 'testing' }
 MyPiece >> isPiece [
 	
 	^ true
@@ -175,6 +169,26 @@ MyPiece >> moveTo: aSquare [
 	square emptyContents.
 	square := aSquare.
 	aSquare contents: self
+]
+
+{ #category : 'rendering' }
+MyPiece >> renderBlackPieceOn: aSquare [ 
+	self subclassResponsibility.
+
+]
+
+{ #category : 'rendering' }
+MyPiece >> renderPieceOn: aSquare [
+	^ self isWhite
+		ifTrue: [ self renderWhitePieceOn: aSquare ]
+		ifFalse: [ self renderBlackPieceOn: aSquare ].
+
+]
+
+{ #category : 'rendering' }
+MyPiece >> renderWhitePieceOn: aSquare [ 
+	self subclassResponsibility.
+
 ]
 
 { #category : 'rendering' }

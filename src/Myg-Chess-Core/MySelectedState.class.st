@@ -34,7 +34,7 @@ MySelectedState >> board: anObject [
 MySelectedState >> clickOn: aMyChessSquare [
 	"We should only move if it's legal but..."
 
-	selection unselect.
+selection unselect.
 	selection contents ifNotNil: [
 		board unhighLightTargets: selection contents targetSquares.
 		board game move: selection contents to: aMyChessSquare ].
@@ -51,5 +51,5 @@ MySelectedState >> selection [
 { #category : 'accessing' }
 MySelectedState >> selection: anObject [
 
-	selection := anObject
+		selection := anObject
 ]

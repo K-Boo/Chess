@@ -12,9 +12,16 @@ MyKnight >> id [
 ]
 
 { #category : 'rendering' }
-MyKnight >> renderPieceOn: aSquare [
+MyKnight >> renderBlackPieceOn: aSquare [ 
+	^ aSquare renderBlackKnight.
 
-	^ aSquare renderKnight: self
+]
+
+{ #category : 'rendering' }
+MyKnight >> renderWhitePieceOn: aSquare [ 
+	^ aSquare renderWhiteKnight.
+
+
 ]
 
 { #category : 'rendering' }
