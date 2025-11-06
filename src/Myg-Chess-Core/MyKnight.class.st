@@ -18,14 +18,6 @@ MyKnight >> renderBlackPieceOn: aSquare [
 ]
 
 { #category : 'rendering' }
-MyKnight >> renderPieceOn: aSquare [
-	^ self isWhite
-		ifTrue: [ self renderWhitePieceOn: aSquare ]
-		ifFalse: [ self renderBlackPieceOn: aSquare ].
-
-]
-
-{ #category : 'rendering' }
 MyKnight >> renderWhitePieceOn: aSquare [ 
 	^ aSquare renderWhiteKnight.
 

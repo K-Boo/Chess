@@ -70,9 +70,13 @@ MyKing >> opponentPieces [
 ]
 
 { #category : 'rendering' }
-MyKing >> renderPieceOn: aSquare [
+MyKing >> renderBlackPieceOn: aSquare [
+	^ aSquare renderBlackKing .
+]
 
-	^ aSquare renderKing: self
+{ #category : 'rendering' }
+MyKing >> renderWhitePieceOn: aSquare [
+	^ aSquare renderWhiteKing .
 ]
 
 { #category : 'rendering' }

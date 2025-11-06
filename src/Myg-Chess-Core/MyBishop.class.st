@@ -18,14 +18,6 @@ MyBishop >> renderBlackPieceOn: aSquare [
 ]
 
 { #category : 'rendering' }
-MyBishop >> renderPieceOn: aSquare [ 
-	^ self isWhite
-		ifTrue: [ self renderWhitePieceOn: aSquare ]
-		ifFalse: [ self renderBlackPieceOn: aSquare ].
-
-]
-
-{ #category : 'rendering' }
 MyBishop >> renderWhitePieceOn: aSquare [ 
 	^ aSquare renderWhiteBishop.
 

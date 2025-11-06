@@ -199,7 +199,7 @@ MyChessSquare >> printOn: aStream [
 ]
 
 { #category : 'rendering' }
-MyChessSquare >> renderBishop: aPiece [
+MyChessSquare >> renderBishop: aPiece [ 
 
 	^ aPiece isWhite
 		  ifTrue: [
@@ -209,7 +209,7 @@ MyChessSquare >> renderBishop: aPiece [
 		  ifFalse: [
 			  color isBlack
 				  ifFalse: [ 'V' ]
-				  ifTrue: [ 'v' ] ]
+				  ifTrue: [ 'v' ] ].
 ]
 
 { #category : 'rendering' }
@@ -217,6 +217,14 @@ MyChessSquare >> renderBlackBishop [
 	^ color isBlack
 				  ifFalse: [ 'V' ]
 				  ifTrue: [ 'v' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderBlackKing [
+	^ color isBlack
+				ifTrue: [ 'l' ]
+				ifFalse: [ 'L' ].
+				  
 ]
 
 { #category : 'rendering' }
@@ -301,6 +309,13 @@ MyChessSquare >> renderWhiteBishop [
 	^ color isBlack
 				  ifFalse: [ 'B' ]
 				  ifTrue: [ 'b' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteKing [
+	^ color isBlack
+				ifTrue: [ 'k' ]
+				ifFalse: [ 'K' ].
 ]
 
 { #category : 'rendering' }

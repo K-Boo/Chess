@@ -178,6 +178,14 @@ MyPiece >> renderBlackPieceOn: aSquare [
 ]
 
 { #category : 'rendering' }
+MyPiece >> renderPieceOn: aSquare [
+	^ self isWhite
+		ifTrue: [ self renderWhitePieceOn: aSquare ]
+		ifFalse: [ self renderBlackPieceOn: aSquare ].
+
+]
+
+{ #category : 'rendering' }
 MyPiece >> renderWhitePieceOn: aSquare [ 
 	self subclassResponsibility.
 
