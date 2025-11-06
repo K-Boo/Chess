@@ -179,19 +179,19 @@ MyChessGame >> initializeFromFENGame: aFENGame [
 { #category : 'testing' }
 MyChessGame >> isDoubleStepMove: piece to: square [ 
 	"Vérifie si c'est un double pas de pion"
-    ^ (piece isPiece and: [ piece isPawn ]) and: [
-        piece isOnStartingRank and: [
-            (piece isWhite and: [ square file = $4 ]) or: [
-                (piece isWhite not and: [ square file = $5 ]) ] ] ]
+	(piece isKindOf: MyPawn) ifFalse: [ ^ false ].
+	^ piece isOnStartingRank and: [
+		(piece isWhite and: [ square file = $4 ]) or: [
+			(piece isWhite not and: [ square file = $5 ]) ] ]
 
 ]
 
 { #category : 'testing' }
 MyChessGame >> isEnPassantMove: piece to: square [ 
 	"Vérifie si c'est une prise en passant"
-    ^ (piece isPiece and: [ piece isPawn ]) and: [
-        (square name = enPassantTargetSquare) and: [
-            enPassantTargetSquare ~= 'NO ENPASSANT' ] ]
+	(piece isKindOf: MyPawn) ifFalse: [ ^ false ].
+	^ (square name = enPassantTargetSquare) and: [
+		enPassantTargetSquare ~= 'NO ENPASSANT' ]
 
 ]
 

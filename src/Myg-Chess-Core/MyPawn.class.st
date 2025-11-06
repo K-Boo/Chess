@@ -18,11 +18,14 @@ MyPawn >> attackingSquares [
 { #category : 'as yet unclassified' }
 MyPawn >> getEnPassantSquare [ 
 	"Retourne la case en passant si elle est disponible"
-	| gameObject enPassantTarget |
+	| boardObject gameObject enPassantTarget |
 	"Sécuriser l'accès au jeu: certains tests n'attachent pas de game au board"
-	gameObject := self board ifNotNil: #game.
+	boardObject := self board.
+	boardObject isNil ifTrue: [ ^ nil ].
+	gameObject := boardObject game.
 	gameObject isNil ifTrue: [ ^ nil ].
-	enPassantTarget := gameObject enPassantTargetSquare ifNil: [ 'NO ENPASSANT' ].
+	enPassantTarget := gameObject enPassantTargetSquare.
+	(enPassantTarget isNil or: [ enPassantTarget = 'NO ENPASSANT' ]) ifTrue: [ ^ nil ].
 	(enPassantTarget = 'NO ENPASSANT') ifTrue: [ ^ nil ].
 	
 	"Vérifier si cette case est adjacente et en diagonale"
