@@ -23,7 +23,8 @@ Class {
 		'movesLabel',
 		'moveCountLabel',
 		'moves',
-		'dsp'
+		'dsp',
+		'enPassantTargetSquare'
 	],
 	#category : 'Myg-Chess-Core',
 	#package : 'Myg-Chess-Core'
@@ -56,6 +57,57 @@ MyChessGame >> checkForMate [
 	blackPlayer king isCheckMated ifTrue: [ self halt: 'White wins!' ].
 ]
 
+{ #category : 'as yet unclassified' }
+MyChessGame >> clearEnPassantState [ 
+	"Efface l'état en passant"
+	self enPassantTargetSquare: 'NO ENPASSANT'
+
+]
+
+{ #category : 'as yet unclassified' }
+MyChessGame >> createEnPassantState: piece to: square [ 
+	"Crée l'état en passant après un double pas"
+	| targetSquare |
+	targetSquare := piece isWhite
+		ifTrue: [ square column asString , '3' ]
+		ifFalse: [ square column asString , '6' ].
+	self enPassantTargetSquare: targetSquare
+
+]
+
+{ #category : 'accessing' }
+MyChessGame >> enPassantTargetSquare [ 
+	^ enPassantTargetSquare
+
+]
+
+{ #category : 'accessing' }
+MyChessGame >> enPassantTargetSquare: aString [ 
+	enPassantTargetSquare := aString
+
+]
+
+{ #category : 'as yet unclassified' }
+MyChessGame >> executeEnPassantCapture: piece to: square [ 
+	"Exécute la prise en passant"
+	| capturedSquare |
+	capturedSquare := self getEnPassantCapturedSquare: piece to: square.
+	capturedSquare ifNotNil: [ capturedSquare emptyContents ].
+	piece moveTo: square.
+	self recordMovementOf: piece to: square
+
+]
+
+{ #category : 'as yet unclassified' }
+MyChessGame >> getEnPassantCapturedSquare: piece to: square [ 
+	"Retourne la case où se trouve la pièce capturée en passant"
+	| capturedFile capturedRank |
+	capturedFile := square column.
+	capturedRank := piece isWhite ifTrue: [ square file asciiValue - 1 ] ifFalse: [ square file asciiValue + 1 ].
+	^ board at: capturedFile asString , capturedRank asCharacter asString
+
+]
+
 { #category : 'initialization' }
 MyChessGame >> initialize [
 
@@ -64,7 +116,8 @@ MyChessGame >> initialize [
 
 	moves := OrderedCollection new.
 	whitePlayer := MyPlayer new white game: self.
-	blackPlayer := MyPlayer new black game: self
+	blackPlayer := MyPlayer new black game: self.
+	enPassantTargetSquare := 'NO ENPASSANT'
 ]
 
 { #category : 'initialization' }
@@ -123,11 +176,45 @@ MyChessGame >> initializeFromFENGame: aFENGame [
 		aLayoutConstraints vertical fitContent ]
 ]
 
-{ #category : 'public' }
-MyChessGame >> move: piece to: square [
+{ #category : 'testing' }
+MyChessGame >> isDoubleStepMove: piece to: square [ 
+	"Vérifie si c'est un double pas de pion"
+    ^ (piece isPiece and: [ piece isPawn ]) and: [
+        piece isOnStartingRank and: [
+            (piece isWhite and: [ square file = $4 ]) or: [
+                (piece isWhite not and: [ square file = $5 ]) ] ] ]
 
+]
+
+{ #category : 'testing' }
+MyChessGame >> isEnPassantMove: piece to: square [ 
+	"Vérifie si c'est une prise en passant"
+    ^ (piece isPiece and: [ piece isPawn ]) and: [
+        (square name = enPassantTargetSquare) and: [
+            enPassantTargetSquare ~= 'NO ENPASSANT' ] ]
+
+]
+
+{ #category : 'public' }
+MyChessGame >> move: piece to: square [ 
+
+	"Gérer la prise en passant"
+	(self isEnPassantMove: piece to: square) ifTrue: [
+		self executeEnPassantCapture: piece to: square.
+		self clearEnPassantState.
+		^ self ].
+
+	"Effacer l'état en passant précédent si non utilisé"
+	self clearEnPassantState.
+
+	"Créer l'état en passant après un double pas"
+	(self isDoubleStepMove: piece to: square) ifTrue: [
+		self createEnPassantState: piece to: square ].
+	
 	piece moveTo: square.
 	self recordMovementOf: piece to: square
+
+
 ]
 
 { #category : 'accessing' }
