@@ -37,13 +37,13 @@ MyChessBoard class >> new [
 { #category : 'accessing' }
 MyChessBoard >> at: coordinate [
 
-	^ grid at: coordinate ifAbsent: nil
+	^ grid at: coordinate ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
 MyChessBoard >> at: aString ifAbsent: aFullBlockClosure [
 
-	^ grid at: aString ifAbsent: aFullBlockClosure
+	^ grid at: aString ifAbsent: aFullBlockClosure 
 ]
 
 { #category : 'accessing' }
@@ -201,7 +201,7 @@ MyChessBoard >> initializeSquares [
 						          color: Color black;
 						          board: self;
 						          initialize;
-						          contents: nil;
+						          contents: MyEmptyPiece instance;"nil"
 						          yourself ]
 				          ifFalse: [
 					          black := true.
@@ -209,7 +209,7 @@ MyChessBoard >> initializeSquares [
 						          color: Color white;
 						          board: self;
 						          initialize;
-						          contents: nil;
+						          contents: MyEmptyPiece instance;"nil"
 						          yourself ].
 			square name: squareNotation.
 			grid at: squareNotation put: square.
@@ -238,7 +238,8 @@ MyChessBoard >> selected: aMyChessSquare [
 { #category : 'highlighting' }
 MyChessBoard >> unhighLightTargets: squares [
 
-	squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
+   squares do: [ :sq | sq ifNotNil: #unhighlightTarget ]
+
 ]
 
 { #category : 'selection' }
