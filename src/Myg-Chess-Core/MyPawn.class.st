@@ -12,9 +12,13 @@ MyPawn >> id [
 ]
 
 { #category : 'rendering' }
-MyPawn >> renderPieceOn: aSquare [ 
-	
-	^ aSquare renderPawn:  self
+MyPawn >> renderBlackPieceOn: aSquare [ 
+	^ aSquare renderBlackPawn.
+]
+
+{ #category : 'rendering' }
+MyPawn >> renderWhitePieceOn: aSquare [ 
+	^ aSquare renderWhitePawn.
 ]
 
 { #category : 'rendering' }

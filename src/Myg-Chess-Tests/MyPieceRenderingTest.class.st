@@ -79,6 +79,30 @@ MyPieceRenderingTest >> testRenderBlackKnightOnWhiteSquare [
 	self assert: (knight renderPieceOn: square) equals: 'M'.
 ]
 
+{ #category : 'pawnRendering' }
+MyPieceRenderingTest >> testRenderBlackPawnOnBlackSquare [ 
+	"context: un pion noir est créé et une case noire est créée"
+	| square pawn |
+	square := MyChessSquare black.
+	pawn := MyPawn black.
+	
+	"trigger: on demande le rendu du pion noir sur la case noire"
+	"assert-check: le caractère retourné doit être 'o' (pion noir sur case noire)"
+	self assert: (pawn renderPieceOn: square) equals: 'o'.
+]
+
+{ #category : 'pawnRendering' }
+MyPieceRenderingTest >> testRenderBlackPawnOnWhiteSquare [ 
+	"context: un pion noir est créé et une case blanche est créée"
+	| square pawn |
+	square := MyChessSquare white.
+	pawn := MyPawn black.
+	
+	"trigger: on demande le rendu du pion noir sur la case blanche"
+	"assert-check: le caractère retourné doit être 'O' (pion noir sur case blanche)"
+	self assert: (pawn renderPieceOn: square) equals: 'O'.
+]
+
 { #category : 'bishopRendering' }
 MyPieceRenderingTest >> testRenderWhiteBishopOnBlackSquare [ 
 	"context: un fou blanc est créé et une case noire est créée"
@@ -154,4 +178,28 @@ MyPieceRenderingTest >> testRenderWhiteKnightOnWhiteSquare [
 	self assert: (knight renderPieceOn: square) equals: 'N'.
 
 
+]
+
+{ #category : 'pawnRendering' }
+MyPieceRenderingTest >> testRenderWhitePawnOnBlackSquare [ 
+	"context: un pion blanc est créé et une case noire est créée"
+	| square pawn |
+	square := MyChessSquare black.
+	pawn := MyPawn white.
+	
+	"trigger: on demande le rendu du pion blanc sur la case noire"
+	"assert-check: le caractère retourné doit être 'p' (pion blanc sur case noire)"
+	self assert: (pawn renderPieceOn: square) equals: 'p'.
+]
+
+{ #category : 'pawnRendering' }
+MyPieceRenderingTest >> testRenderWhitePawnOnWhiteSquare [ 
+	"context: un pion blanc est créé et une case blanche est créée"
+	| square pawn |
+	square := MyChessSquare white.
+	pawn := MyPawn white.
+	
+	"trigger: on demande le rendu du pion blanc sur la case blanche"
+	"assert-check: le caractère retourné doit être 'P' (pion blanc sur case blanche)"
+	self assert: (pawn renderPieceOn: square) equals: 'P'.
 ]
