@@ -58,17 +58,58 @@ Je fais cela sur conseil du professeur et ainsi prioriser les différentes tâch
 
 ## Checklist rapide
 
-- [ ] Tests déplacements simples (blanc/noir)
-- [ ] Tests double pas + blocages
-- [ ] Tests captures diagonales + impossibilité de capturer en avant
-- [ ] Tests bords/hors-plateau
-- [ ] Implémentation base → captures
-- [ ] Exécution des tests et corrections
-- [ ] Tests en passant (création, exécution, expiration)
-- [ ] Tests promotion (déclenchement, choix par défaut si bot)
-- [ ] Implémentation en passant → promotion
-- [ ] Vérifications UI/bot/notation
-- [ ] Refactoring + docs
+- [x] Tests déplacements simples (blanc/noir)
+- [x] Tests double pas + blocages
+- [x] Tests captures diagonales + impossibilité de capturer en avant
+- [x] Tests bords/hors-plateau
+- [x] Implémentation base → captures
+- [x] Exécution des tests et corrections
+- [x] Tests en passant (création, exécution, expiration)
+- [x] Tests promotion (déclenchement, choix par défaut si bot)
+- [x] Implémentation en passant → promotion
+- [x] Vérifications UI/bot/notation
+- [x] Refactoring + docs
+
+---
+
+## Décisions d’implémentation (résumé)
+
+- Phase 1 (déplacements de base):
+
+  - Séparation des responsabilités:
+    - `attackingSquares` (pion): retourne uniquement les deux diagonales vers l’avant, sans conditions d’occupation (utile pour menaces/échec et sélection visuelle).
+    - `targetSquaresLegal:` (pion): génère les destinations réellement jouables.
+  - Règles implémentées dans `targetSquaresLegal:`:
+    - Pas simple: avance d’une case uniquement si la case devant est vide.
+    - Double pas initial: seulement depuis la rangée de départ (2 pour blanc, 7 pour noir) ET si la case devant et la case d’arrivée sont vides.
+    - Captures diagonales: uniquement sur pièce adverse; jamais de capture en ligne droite.
+  - Utilitaires:
+    - `isOnStartingRank` (pion): détecte la rangée de départ.
+    - `isPawn` (pion/pièce): évite les tests de type fragiles côté moteur.
+  - Choix de conception:
+    - Offsets “sens de marche” gérés via `isWhite` (up/down) pour éviter dupliquer la logique blanc/noir.
+    - Pas d’UI/bot spécifique en Phase 1; pure logique de mouvement/test unitaire.
+
+- En passant:
+  - `MyChessGame` maintient `enPassantTargetSquare` (initialisé à `NO ENPASSANT`).
+  - `move:` efface l’état précédent, crée l’état après un double pas, exécute et nettoie lors d’une prise en passant.
+  - `MyPawn >> getEnPassantSquare` est robuste si `board game` est absent (tests unitaires).
+- Promotion:
+  - Détection côté `MyPawn` via `getPromotionSquare` (avance vers la dernière rangée si atteignable).
+  - Choix UI/bot non interactif pour l’instant (détection uniquement). À enrichir si besoin d’une popup/stratégie bot.
+- Pions (Phase 1):
+  - `attackingSquares` (diagonales avant), `targetSquaresLegal:` (pas simple, double pas si rang de départ & chemin libre, captures diagonales, en passant, promotion).
+  - Méthodes utilitaires: `isOnStartingRank`, `isPawn`.
+
+---
+
+## Approche méthodologique (TDD, Design Thinking, Reverse Engineering)
+
+J'ai adopté une approche TDD stricte: pour chaque règle (pas simple, captures diagonales, double pas, en passant, promotion), j'ai écrit les tests en premier avec une documentation "context / trigger / assert-check" comme on l'a fait en classe avec le pair programming sur le katta rover. Les tests ont guidé l’implémentation minimale pour faire passer le rouge au vert, puis ont servi de filet de sécurité lors des ajustements (ordre d’effacement/création de l’état en passant, robustesse quand `board game` est absent, parenthésage des `and:/or:` en Smalltalk).
+
+Côté Design Thinking, j'ai clarifié le problème avant d’implémenter: séparation des responsabilités (`attackingSquares` vs `targetSquaresLegal:`), identification des invariants (rang de départ, chemin libre, diagonales adverses, fenêtre d’un coup pour l’en passant), et priorisation par phases (simple d’abord, options ensuite) pour éviter la complexité prématurée tout en assurant une valeur incrémentale.
+
+En Reverse Engineering, j'ai parcouru le code existant (plateau, cases, pièces, moteur, FEN) pour comprendre l’architecture, repérer les points d’extension (moteur de jeu pour l’en passant, pion pour la génération des coups), et aligner nos changements avec les conventions du projet (méthodes d’accès, style Bloc/Toplo, structure des tests). Cette lecture a permis de minimiser l’impact (ajouts ciblés, méthodes utilitaires, robustesse) et de conserver la cohérence globale.
 
 ---
 
