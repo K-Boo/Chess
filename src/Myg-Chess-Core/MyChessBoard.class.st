@@ -94,7 +94,7 @@ MyChessBoard >> highLightTargets: squares [
 { #category : 'initialization' }
 MyChessBoard >> initialize [
 
-	super initialize.
+	super initialize.  
 
 	self blackColor: Color blue.
 	self whiteColor: Color orange.

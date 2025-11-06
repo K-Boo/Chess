@@ -1,18 +1,18 @@
 Class {
-	#name : 'MyBishopTest',
+	#name : 'MyBishopTests',
 	#superclass : 'TestCase',
 	#category : 'Myg-Chess-Tests',
 	#package : 'Myg-Chess-Tests'
 }
 
 { #category : 'tests' }
-MyBishopTest >> testId [
+MyBishopTests >> testId [
 
 	self assert: MyBishop new id equals: 'B'
 ]
 
 { #category : 'tests' }
-MyBishopTest >> testMoves [
+MyBishopTests >> testMoves [
 
 	| bishop squares board |
 	board := MyChessBoard empty.
@@ -27,7 +27,7 @@ MyBishopTest >> testMoves [
 ]
 
 { #category : 'tests' }
-MyBishopTest >> testMovesWithOponentObstacle [
+MyBishopTests >> testMovesWithOponentObstacle [
 
 	| bishop squares board |
 	board := MyChessBoard empty.
@@ -47,7 +47,7 @@ MyBishopTest >> testMovesWithOponentObstacle [
 ]
 
 { #category : 'tests' }
-MyBishopTest >> testMovesWithSameColorObstacle [
+MyBishopTests >> testMovesWithSameColorObstacle [
 
 	| bishop squares board |
 	board := MyChessBoard empty.
