@@ -229,6 +229,13 @@ MyChessSquare >> renderBlackPawn [
 ]
 
 { #category : 'rendering' }
+MyChessSquare >> renderBlackQueen [
+		^ color isBlack
+				  ifFalse: [ 'W' ]
+				  ifTrue: [ 'w' ].
+]
+
+{ #category : 'rendering' }
 MyChessSquare >> renderWhiteBishop [
 	^ color isBlack
 				  ifFalse: [ 'B' ]
@@ -255,6 +262,13 @@ MyChessSquare >> renderWhitePawn [
 	^ color isBlack
 				  ifFalse: [ 'P' ]
 				  ifTrue: [ 'p' ].
+]
+
+{ #category : 'rendering' }
+MyChessSquare >> renderWhiteQueen [
+		^ color isBlack
+				  ifFalse: [ 'Q' ]
+				  ifTrue: [ 'q' ].
 ]
 
 { #category : 'accessing' }

@@ -103,6 +103,30 @@ MyPieceRenderingTest >> testRenderBlackPawnOnWhiteSquare [
 	self assert: (pawn renderPieceOn: square) equals: 'O'.
 ]
 
+{ #category : 'queenRendering' }
+MyPieceRenderingTest >> testRenderBlackQueenOnBlackSquare [ 
+	"context: une reine noire est créée et une case noire est créée"
+	| square queen |
+	square := MyChessSquare black.
+	queen := MyQueen black.
+	
+	"trigger: on demande le rendu de la reine noire sur la case noire"
+	"assert-check: le caractère retourné doit être 'w' (reine noire sur case noire)"
+	self assert: (queen renderPieceOn: square) equals: 'w'.
+]
+
+{ #category : 'queenRendering' }
+MyPieceRenderingTest >> testRenderBlackQueenOnWhiteSquare [ 
+	"context: une reine noire est créée et une case blanche est créée"
+	| square queen |
+	square := MyChessSquare white.
+	queen := MyQueen black.
+	
+	"trigger: on demande le rendu de la reine noire sur la case blanche"
+	"assert-check: le caractère retourné doit être 'W' (reine noire sur case blanche)"
+	self assert: (queen renderPieceOn: square) equals: 'W'.
+]
+
 { #category : 'bishopRendering' }
 MyPieceRenderingTest >> testRenderWhiteBishopOnBlackSquare [ 
 	"context: un fou blanc est créé et une case noire est créée"
@@ -202,4 +226,28 @@ MyPieceRenderingTest >> testRenderWhitePawnOnWhiteSquare [
 	"trigger: on demande le rendu du pion blanc sur la case blanche"
 	"assert-check: le caractère retourné doit être 'P' (pion blanc sur case blanche)"
 	self assert: (pawn renderPieceOn: square) equals: 'P'.
+]
+
+{ #category : 'queenRendering' }
+MyPieceRenderingTest >> testRenderWhiteQueenOnBlackSquare [ 
+	"context: une reine blanche est créée et une case noire est créée"
+	| square queen |
+	square := MyChessSquare black.
+	queen := MyQueen white.
+	
+	"trigger: on demande le rendu de la reine blanche sur la case noire"
+	"assert-check: le caractère retourné doit être 'q' (reine blanche sur case noire)"
+	self assert: (queen renderPieceOn: square) equals: 'q'.
+]
+
+{ #category : 'queenRendering' }
+MyPieceRenderingTest >> testRenderWhiteQueenOnWhiteSquare [ 
+	"context: une reine blanche est créée et une case blanche est créée"
+	| square queen |
+	square := MyChessSquare white.
+	queen := MyQueen white.
+	
+	"trigger: on demande le rendu de la reine blanche sur la case blanche"
+	"assert-check: le caractère retourné doit être 'Q' (reine blanche sur case blanche)"
+	self assert: (queen renderPieceOn: square) equals: 'Q'.
 ]
